@@ -1,8 +1,14 @@
+locals {
+  project = "devops-demo"   
+  env     = "dev"
+  name    = "${local.project}-${local.env}"
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   version = "~> 6.0"
 
-  name = "my-vpc"
+  name = "${local.name}-vpc"
   cidr = "10.0.0.0/16"
 
   azs             = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
@@ -30,7 +36,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
 
-  name               = "learning-eks"
+  name = "${local.name}-eks"
   kubernetes_version = "1.35"
 
   # Optional
